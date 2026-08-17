@@ -1,4 +1,4 @@
-// packages/db/schema.prisma
+// packages/db/prisma/schema.prisma
 
 generator client {
   provider = "prisma-client-js"
@@ -6,34 +6,48 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") // This will point to your AWS RDS string
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
+  password  String   // Hashed password
   name      String
+  bio       String?  @db.VarChar(160)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
   posts     Post[]
   likes     Like[]
-  createdAt DateTime @default(now())
 }
 
 model Post {
   id        String   @id @default(cuid())
-  content   String
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
-  likes     Like[]
+  content   String   @db.VarChar(280)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes     Like[]
+
+  @@index([authorId])
 }
 
 model Like {
   id        String   @id @default(cuid())
-  userId    String
-  postId    String
-  user      User     @relation(fields: [userId], references: [id])
-  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
 
-  // Prevent a user from liking the same post twice
-  @@unique([userId, postId])
+  // Relations
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Ensure a user can only like a specific post once
+  @@unique([postId, userId])
+  @@index([userId])
 }
