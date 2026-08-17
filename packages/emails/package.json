@@ -1,0 +1,21 @@
+{
+  "name": "@torihub/emails",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": "./mailer.ts",
+    "./templates/*": "./templates/*.tsx"
+  },
+  "scripts": {
+    "dev": "email dev"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.0.0",
+    "@react-email/components": "latest",
+    "react-email": "latest",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

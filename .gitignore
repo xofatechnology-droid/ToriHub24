@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js Build Artifacts
+.next/
+dist/
+out/
+build/
+
+# Turborepo Cache
+.turbo/
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# OS Files
+.DS_Store
+Thumbs.db
