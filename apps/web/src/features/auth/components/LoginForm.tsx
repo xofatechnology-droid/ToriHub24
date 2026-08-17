@@ -1,97 +1,81 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { registerUser } from "../api/registerUser";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@torihub/ui/components/card";
-import { Button } from "@torihub/ui/components/button";
-import { Input } from "@torihub/ui/components/input";
-import { Label } from "@torihub/ui/components/label";
+import Link from "next/link";
+import { Button, Input, Label } from "@torihub/ui";
 import { ROUTES } from "@/lib/constants";
 
-export function RegisterForm() {
+export function LoginForm() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
     setError(null);
-    
-    const formData = new FormData(event.currentTarget);
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
 
-    startTransition(async () => {
-      const result = await registerUser({ name, email, password });
-      
-      if (result.success) {
-        router.push(ROUTES.FEED);
-      } else {
-        setError(result.error || "Failed to create account.");
-      }
-    });
+    try {
+      // Add your authentication action / fetch call here
+      router.push(ROUTES.FEED);
+    } catch (err) {
+      setError("Invalid email or password.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto mt-12">
-      <CardHeader>
-        <CardTitle className="text-2xl text-center">Join ToriHub24</CardTitle>
-      </CardHeader>
-      
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Display Name</Label>
-            <Input 
-              id="name" 
-              name="name" 
-              type="text" 
-              placeholder="Alex" 
-              required 
-              disabled={isPending}
-            />
-          </div>
+    <div className="mx-auto max-w-md space-y-6 rounded-lg border bg-white p-6 shadow-sm">
+      <div className="space-y-2 text-center">
+        <h1 className="text-2xl font-bold tracking-tight">Welcome back to ToriHub24</h1>
+        <p className="text-sm text-muted-foreground">Enter your credentials to access your account</p>
+      </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input 
-              id="email" 
-              name="email" 
-              type="email" 
-              placeholder="you@example.com" 
-              required 
-              disabled={isPending}
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input 
-              id="password" 
-              name="password" 
-              type="password" 
-              required 
-              disabled={isPending}
-            />
-          </div>
+      {error && (
+        <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+          {error}
+        </div>
+      )}
 
-          {error && (
-            <div className="text-sm text-red-500 font-medium">{error}</div>
-          )}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="name@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? "Creating account..." : "Create Account"}
-          </Button>
-        </form>
-      </CardContent>
-      
-      <CardFooter className="flex justify-center">
-        <p className="text-sm text-gray-500">
-          Already have an account? <a href={ROUTES.LOGIN} className="text-blue-500 hover:underline">Sign in</a>
-        </p>
-      </CardFooter>
-    </Card>
+        <div className="space-y-2">
+          <Label htmlFor="password">Password</Label>
+          <Input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? "Signing in..." : "Sign in"}
+        </Button>
+      </form>
+
+      <div className="text-center text-sm">
+        Don&apos;t have an account?{" "}
+        <Link href={ROUTES.REGISTER} className="font-medium text-primary hover:underline">
+          Sign up
+        </Link>
+      </div>
+    </div>
   );
 }

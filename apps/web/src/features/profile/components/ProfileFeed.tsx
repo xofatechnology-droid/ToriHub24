@@ -12,7 +12,7 @@ export function ProfileFeed({ posts, userName }: ProfileFeedProps) {
   if (!posts || posts.length === 0) {
     return (
       <div className="text-center py-10 bg-white rounded-lg border border-gray-100 mt-6">
-        <p className="text-gray-500">{userName} hasn't posted anything yet.</p>
+        <p className="text-gray-500">{userName} hasn&apos;t posted anything yet.</p>
       </div>
     );
   }
