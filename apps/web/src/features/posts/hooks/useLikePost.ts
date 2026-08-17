@@ -17,10 +17,11 @@ export function useLikePost(
 
   const [optimisticState, setOptimisticState] = useOptimistic(
     { likeCount: initialLikes, isLiked: initialIsLiked },
-    (current: LikeState) => ({
-      likeCount: current.isLiked ? current.likeCount - 1 : current.likeCount + 1,
-      isLiked: !current.isLiked,
-    })
+    (current: LikeState, update?: LikeState) =>
+      update ?? {
+        likeCount: current.isLiked ? current.likeCount - 1 : current.likeCount + 1,
+        isLiked: !current.isLiked,
+      }
   );
 
   const toggleLike = () => {
@@ -32,8 +33,10 @@ export function useLikePost(
       });
 
       const result = await toggleLikePost(postId);
+      
       if (!result.success) {
-        console.error("Failed to toggle like:", result.error);
+        const errorMessage = "error" in result ? result.error : "Failed to toggle like.";
+        console.error("Failed to toggle like:", errorMessage);
       }
     });
   };

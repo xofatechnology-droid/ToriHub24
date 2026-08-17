@@ -18,8 +18,8 @@ export function usePosts(initialData: PostWithAuthor[] = []) {
     try {
       const result = await getPosts();
       
-      if (result.success && result.data) {
-        setPosts(result.data as PostWithAuthor[]);
+      if (result.success) {
+        setPosts((result.data as PostWithAuthor[]) ?? []);
       } else {
         setError(result.error || "Failed to load feed.");
       }
