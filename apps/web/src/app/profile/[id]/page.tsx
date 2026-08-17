@@ -36,7 +36,6 @@ export default async function ProfilePage({ params }: { params: { id: string } }
       </div>
 
       {/* Bottom section: User's posts */}
-      {/* @ts-expect-error - Prisma relation types mismatch with strict PostWithAuthor, safe to ignore for UI */}
       <ProfileFeed posts={profile.posts} userName={profile.name} />
     </div>
   );
