@@ -1,35 +1,47 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { toggleLikeAction } from "../actions/postActions"; 
+import { useOptimistic, useTransition } from "react";
+import { toggleLikePost } from "../api/toggleLikePost";
 
-export const useLikePost = (postId: string, initialIsLiked: boolean, initialLikeCount: number) => {
+type LikeState = {
+  likeCount: number;
+  isLiked: boolean;
+};
+
+export function useLikePost(
+  postId: string, 
+  initialLikes: number, 
+  initialIsLiked: boolean = false
+) {
   const [isPending, startTransition] = useTransition();
-  
-  // Local state for optimistic updates
-  const [isLiked, setIsLiked] = useState(initialIsLiked);
-  const [likeCount, setLikeCount] = useState(initialLikeCount);
+
+  const [optimisticState, setOptimisticState] = useOptimistic(
+    { likeCount: initialLikes, isLiked: initialIsLiked },
+    (current: LikeState) => ({
+      likeCount: current.isLiked ? current.likeCount - 1 : current.likeCount + 1,
+      isLiked: !current.isLiked,
+    })
+  );
 
   const toggleLike = () => {
-    // 1. Instantly update the UI (Optimistic update)
-    const previousIsLiked = isLiked;
-    const previousLikeCount = likeCount;
-    
-    setIsLiked(!previousIsLiked);
-    setLikeCount(previousIsLiked ? previousLikeCount - 1 : previousLikeCount + 1);
-
-    // 2. Perform the server mutation in the background
     startTransition(async () => {
-      const result = await toggleLikeAction(postId);
-      
-      // 3. Roll back the UI if the server action fails
-      if (result?.error) {
-        setIsLiked(previousIsLiked);
-        setLikeCount(previousLikeCount);
-        // Optional: Trigger a toast notification here about the error
+      // Instantly update local state before server responds
+      setOptimisticState({
+        likeCount: optimisticState.isLiked ? optimisticState.likeCount - 1 : optimisticState.likeCount + 1,
+        isLiked: !optimisticState.isLiked,
+      });
+
+      const result = await toggleLikePost(postId);
+      if (!result.success) {
+        console.error("Failed to toggle like:", result.error);
       }
     });
   };
 
-  return { isLiked, likeCount, toggleLike, isPending };
-};
+  return {
+    likeCount: optimisticState.likeCount,
+    isLiked: optimisticState.isLiked,
+    isPending,
+    toggleLike,
+  };
+}
