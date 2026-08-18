@@ -2,11 +2,11 @@
   "name": "@torihub/ui",
   "version": "1.0.0",
   "private": true,
-  "main": "./index.tsx",
+  "main": "./Index.tsx",
   "exports": {
     ".": {
-      "types": "./index.tsx",
-      "default": "./index.tsx"
+      "types": "./Index.tsx",
+      "default": "./Index.tsx"
     },
     "./components/card": {
       "types": "./components/Card.tsx",
