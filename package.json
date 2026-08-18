@@ -13,6 +13,7 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "turbo": "^2.10.10"
+    "turbo": "^2.10.10",
+    "next": "^14.0.0"
   }
 }
