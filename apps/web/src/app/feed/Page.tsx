@@ -8,11 +8,11 @@ export const metadata = {
   description: "Community activity and posts on ToriHub24",
 };
 
-export const revalidate = 0; // Disable static caching to serve real-time feed updates
+export const dynamic = "force-dynamic";
 
 export default async function FeedPage() {
   const result = await getPosts();
-  const posts = result.success && result.data ? (result.data as PostWithAuthor[]) : [];
+  const posts = result.success ? (result.data as PostWithAuthor[]) : [];
 
   return (
     <main className="max-w-2xl mx-auto py-8 px-4">
@@ -22,8 +22,12 @@ export default async function FeedPage() {
 
       <CreatePostInput />
 
-      {posts.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-lg border border-gray-100">
+      {!result.success ? (
+        <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+          Failed to load feed posts. Please refresh or try again shortly.
+        </div>
+      ) : posts.length === 0 ? (
+        <div className="text-center py-12 bg-white rounded-lg border border-gray-100 shadow-sm">
           <p className="text-gray-500">No posts yet. Share something with the community!</p>
         </div>
       ) : (

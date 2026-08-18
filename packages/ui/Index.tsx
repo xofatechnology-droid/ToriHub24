@@ -9,3 +9,4 @@ export { CardContent } from "./components/CardContent";
 export { CardFooter } from "./components/CardFooter";
 export { cn } from "./utils";
 export { ShareModal } from "./components/ShareModal";
+export { PostCard } from "./components/PostCard";
