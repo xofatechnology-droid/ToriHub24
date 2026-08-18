@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { useProfile } from "../hooks/useProfile";
-import { Button } from "@torihub/ui/components/button";
-import { Input } from "@torihub/ui/components/input";
-import { Label } from "@torihub/ui/components/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@torihub/ui/components/card";
+import { Button } from "@torihub/ui/components/Button";
+import { Input } from "@torihub/ui/components/Input";
+import { Label } from "@torihub/ui/components/Label";
+import { Card, CardContent, CardHeader, CardTitle } from "@torihub/ui/components/Card";
 
 export function EditProfileModal({ currentBio, onClose }: { currentBio: string, onClose: () => void }) {
   const [bio, setBio] = useState(currentBio || "");

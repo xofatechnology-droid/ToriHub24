@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@torihub/ui/components/button";
+import { Button } from "@torihub/ui/components/Button";
 import { EditProfileModal } from "./EditProfileModal";
 
 export function ProfileActions({ currentBio }: { currentBio: string }) {

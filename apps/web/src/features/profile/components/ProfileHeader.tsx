@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@torihub/ui/components/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@torihub/ui/components/Card";
 
 type ProfileProps = {
   user: {
