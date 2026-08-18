@@ -8,3 +8,4 @@ export { CardDescription } from "./components/CardDescription";
 export { CardContent } from "./components/CardContent";
 export { CardFooter } from "./components/CardFooter";
 export { cn } from "./utils";
+export { ShareModal } from "./components/ShareModal";
