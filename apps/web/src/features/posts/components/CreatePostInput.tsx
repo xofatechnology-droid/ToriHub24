@@ -2,8 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { createPost } from "../api/createPost";
-import { Card, CardContent, CardFooter } from "@torihub/ui/components/card";
-import { Button } from "@torihub/ui/components/button";
+import { Card, CardContent, CardFooter } from "@torihub/ui/components/Card";
+import { Button } from "@torihub/ui/components/Button";
 import { PLATFORM_LIMITS } from "@/lib/constants";
 
 export function CreatePostInput() {

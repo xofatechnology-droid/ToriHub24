@@ -21,7 +21,7 @@ export function usePosts(initialData: PostWithAuthor[] = []) {
       if (result.success) {
         setPosts((result.data as PostWithAuthor[]) ?? []);
       } else {
-        setError(result.error || "Failed to load feed.");
+        setError("Failed to load feed.");
       }
     } catch (err) {
       setError("An unexpected error occurred while fetching posts.");

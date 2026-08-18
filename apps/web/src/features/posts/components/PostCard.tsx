@@ -1,8 +1,8 @@
 "use client";
 
 import { useTransition } from "react";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@torihub/ui/components/card";
-import { Button } from "@torihub/ui/components/button";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@torihub/ui/components/Card";
+import { Button } from "@torihub/ui/components/Button";
 import { formatRelativeTime } from "@/lib/utils";
 import { likePost } from "../api/likePost";
 import type { PostWithAuthor } from "../types";
