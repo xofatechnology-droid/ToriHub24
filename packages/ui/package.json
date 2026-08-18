@@ -8,6 +8,30 @@
       "types": "./index.tsx",
       "default": "./index.tsx"
     },
+    "./components/card": {
+      "types": "./components/Card.tsx",
+      "default": "./components/Card.tsx"
+    },
+    "./components/card-header": {
+      "types": "./components/CardHeader.tsx",
+      "default": "./components/CardHeader.tsx"
+    },
+    "./components/card-title": {
+      "types": "./components/CardTitle.tsx",
+      "default": "./components/CardTitle.tsx"
+    },
+    "./components/card-description": {
+      "types": "./components/CardDescription.tsx",
+      "default": "./components/CardDescription.tsx"
+    },
+    "./components/card-content": {
+      "types": "./components/CardContent.tsx",
+      "default": "./components/CardContent.tsx"
+    },
+    "./components/card-footer": {
+      "types": "./components/CardFooter.tsx",
+      "default": "./components/CardFooter.tsx"
+    },
     "./components/*": {
       "types": "./components/*.tsx",
       "default": "./components/*.tsx"
