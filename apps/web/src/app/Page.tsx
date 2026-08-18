@@ -1,4 +1,4 @@
-import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@torihub/ui";
+import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@torihub/ui/";
 import { db } from "@torihub/db";
 
 export default async function Home() {
