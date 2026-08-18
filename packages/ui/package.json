@@ -3,11 +3,19 @@
   "version": "1.0.0",
   "private": true,
   "main": "./index.tsx",
-  "types": "./index.tsx",
   "exports": {
-    ".": "./index.tsx",
-    "./components/*": "./components/*.tsx",
-    "./utils": "./utils.ts"
+    ".": {
+      "types": "./index.tsx",
+      "default": "./index.tsx"
+    },
+    "./components/*": {
+      "types": "./components/*.tsx",
+      "default": "./components/*.tsx"
+    },
+    "./utils": {
+      "types": "./utils.ts",
+      "default": "./utils.ts"
+    }
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.3.3",
